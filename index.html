@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MOLE RUSH! — 아케이드 두더지 잡기</title>
+  <meta name="description" content="신나는 아케이드 두더지 잡기 게임 MOLE RUSH! 황금 두더지를 잡고 폭탄을 피하며 최고 점수와 콤보에 도전하세요.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Pretendard:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 배경 장식 요소들 -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-grid"></div>
+
+  <main class="game-wrapper">
+    <!-- 헤더 영역 -->
+    <header class="game-header">
+      <div class="header-top">
+        <div class="logo-group">
+          <span class="game-tag">ARCADE MINI GAME</span>
+          <h1 class="game-title">MOLE <span class="highlight">RUSH!</span></h1>
+        </div>
+        <div class="header-right">
+          <button id="soundToggleBtn" class="sound-toggle-btn" aria-label="사운드 켜기/끄기" title="효과음 On/Off">
+            <span id="soundIcon" class="sound-icon">🔊</span>
+          </button>
+          <div class="highscore-badge" id="highScoreBadge">
+            <span class="badge-icon">👑</span>
+            <div class="badge-content">
+              <span class="badge-label">BEST</span>
+              <span id="highScore" class="badge-val">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 대시보드 상태 영역 -->
+    <section class="dashboard" aria-label="게임 상태">
+      <!-- 점수 카드 -->
+      <div class="stat-card stat-score" id="scoreCard">
+        <div class="stat-icon-wrapper">⭐</div>
+        <div class="stat-info">
+          <span class="stat-label">SCORE</span>
+          <span id="currentScore" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <!-- 남은 시간 카드 -->
+      <div class="stat-card stat-time" id="timeCard">
+        <div class="stat-icon-wrapper">⏳</div>
+        <div class="stat-info">
+          <span class="stat-label">TIME</span>
+          <span id="timeLeft" class="stat-value">45<small>s</small></span>
+        </div>
+        <div class="timer-bar-container">
+          <div id="timerBar" class="timer-bar"></div>
+        </div>
+      </div>
+
+      <!-- 콤보 카드 -->
+      <div class="stat-card stat-combo" id="comboCard">
+        <div class="stat-icon-wrapper">🔥</div>
+        <div class="stat-info">
+          <span class="stat-label">COMBO</span>
+          <span id="currentCombo" class="stat-value">0</span>
+        </div>
+        <span id="comboBonusTag" class="combo-bonus-tag hidden">+5 BONUS!</span>
+      </div>
+    </section>
+
+    <!-- 3x3 두더지 게임판 -->
+    <section class="board-container" aria-label="게임 필드">
+      <div class="mole-board" id="moleBoard">
+        <!-- 9개의 구멍 (0 ~ 8) -->
+        <div class="hole" data-index="0">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+
+        <div class="hole" data-index="1">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+
+        <div class="hole" data-index="2">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+
+        <div class="hole" data-index="3">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+
+        <div class="hole" data-index="4">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+
+        <div class="hole" data-index="5">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+
+        <div class="hole" data-index="6">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+
+        <div class="hole" data-index="7">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+
+        <div class="hole" data-index="8">
+          <div class="hole-rim"></div>
+          <div class="hole-inside">
+            <div class="mole">
+              <div class="mole-inner">
+                <span class="mole-char"></span>
+              </div>
+            </div>
+          </div>
+          <div class="hole-front"></div>
+          <div class="floating-effect"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 하단 컨트롤 & 룰 안내 영역 -->
+    <section class="game-footer">
+      <button id="startBtn" class="action-btn primary-btn">
+        <span class="btn-text">게임 시작</span>
+        <span class="btn-subtext">SPACE or CLICK</span>
+      </button>
+
+      <!-- 캐릭터 점수 및 규칙 안내 카드 -->
+      <div class="rule-cards">
+        <div class="rule-item item-normal">
+          <div class="rule-icon-box">🐹</div>
+          <div class="rule-desc">
+            <span class="rule-name">일반 두더지</span>
+            <span class="rule-score plus">+10점</span>
+          </div>
+        </div>
+
+        <div class="rule-item item-golden">
+          <div class="rule-icon-box">✨</div>
+          <div class="rule-desc">
+            <span class="rule-name">황금 두더지</span>
+            <span class="rule-score golden">+30점</span>
+          </div>
+        </div>
+
+        <div class="rule-item item-bomb">
+          <div class="rule-icon-box">💣</div>
+          <div class="rule-desc">
+            <span class="rule-name">폭탄 두더지</span>
+            <span class="rule-score minus">-15점 & 콤보 초기화</span>
+          </div>
+        </div>
+
+        <div class="rule-item item-combo">
+          <div class="rule-icon-box">🔥</div>
+          <div class="rule-desc">
+            <span class="rule-name">3연속 콤보</span>
+            <span class="rule-score combo">+5점 추가 보너스!</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 게임 오버 / 결과 모달 다이얼로그 -->
+  <div id="resultModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span id="modalEmoji" class="modal-emoji">🎉</span>
+        <h2 id="modalTitle" class="modal-title">GAME OVER</h2>
+        <p id="newRecordBadge" class="new-record-badge hidden">🏆 최고 기록 달성! 🏆</p>
+      </div>
+
+      <div class="modal-stats">
+        <div class="modal-stat-box">
+          <span class="m-stat-label">최종 점수</span>
+          <span id="finalScore" class="m-stat-value">0</span>
+        </div>
+        <div class="modal-stat-box">
+          <span class="m-stat-label">최대 콤보</span>
+          <span id="maxComboDisplay" class="m-stat-value">0</span>
+        </div>
+        <div class="modal-stat-box">
+          <span class="m-stat-label">최고 점수</span>
+          <span id="modalHighScore" class="m-stat-value">0</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="restartBtn" class="action-btn primary-btn modal-btn">
+          <span class="btn-text">다시 하기</span>
+          <span class="btn-subtext">RETRY</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
